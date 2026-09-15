@@ -1,0 +1,36 @@
+
+<!-- 3.9. Leia 10 valores e informe quantos estão no intervalo de 24 a 42 (inclusive) e quantos estão fora..
+ - No exercício 10, exiba os números que ficaram dentro e fora do intervalo. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercicio3.9</title>
+</head>
+<body>
+<script>
+let contador = 0;
+let fora = 0;
+for (let i = 1; i <= 10; i++) {
+    let numero1 = parseFloat(prompt("Digite um valor"));
+
+    while (isNaN(numero1) || numero1 === '') {
+        alert("Digite um valor válido");
+        numero1 = parseFloat(prompt("Digite um valor"));
+    }
+
+    if (numero1 >= 24 && numero1 <= 42) {
+        contador++;
+    } else {
+        fora++;
+    }
+}
+alert('Números dentro do intervalo: ' + contador);
+alert('Números fora do intervalo: ' + fora);
+
+</script>
+    
+</body>
+</html>
+</html>

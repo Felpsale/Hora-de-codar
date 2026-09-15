@@ -1,0 +1,30 @@
+<!--3.7. Leia um valor `N` (N > 0) e imprima todos os inteiros de 1 até `N`.-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercicio3.7</title>
+</head>
+<body>
+<script>
+
+let numero1 = parseInt(prompt("Digite um valor"));
+while (numero1 <= 0 || (isNaN(numero1) || numero1 === '' )) {
+alert("Digite um valor maior que 0");
+numero1 = parseInt(prompt("Digite um valor"));
+}
+
+for(let i = 1; i <= numero1; i++){
+
+document.write(i + " - ");
+}
+
+
+
+
+
+</script>
+    
+</body>
+</html>

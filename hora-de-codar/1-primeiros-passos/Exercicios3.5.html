@@ -1,0 +1,50 @@
+<!--3.5. Leia 2 notas de um aluno, calcule a média final e considere aprovação com nota 9,5. Em seguida, pergunte: `Calcular a média de outro aluno? (S/N)`. Se a resposta for `S`, repita; caso contrário, 
+encerre e mostre a quantidade de alunos aprovados.-->
+<t!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <itle>Exercicio3.5</title>
+</head>
+<body>
+<script>
+
+let aprovado = 0;
+let reprovado = 0;
+let repete = "S";
+
+
+
+while(repete == "S" || repete == "s" ){
+let numero1 = parseFloat(prompt("digite a primeira nota"));
+let numero2 = parseFloat(prompt("digite a segunda nota"));
+while ((isNaN(numero1) || numero1 === '') || (isNaN(numero2) || numero2 === '') ) {
+alert("por favor, insira um número");
+numero1 = parseFloat(prompt("Digite a primeira nota"));
+numero2 = parseFloat(prompt("Digite a segunda nota"));
+}
+let media = ((numero1 + numero2) / 2);
+
+if (media >= 9.5) { 
+    
+    alert(" A média do aluno é : " + media + " Ele foi aprovado" );
+    aprovado++
+
+}
+else if (media < 9.5) { 
+   
+    alert(" A média do aluno é: " + media + " Ele foi reprovado"); 
+    reprovado++
+}
+
+repete = prompt(" Calcular a média de outro aluno? (S/N) ");
+
+}
+alert ("A quantidade de alunos aprovados foi " + aprovado + " e a quantidade de reprovados foi " + reprovado);
+
+
+</script>
+    
+</body>
+</html>
