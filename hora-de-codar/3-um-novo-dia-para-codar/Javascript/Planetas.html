@@ -12,16 +12,13 @@ Em seguida, peça ao usuário para digitar o nome de um planeta. Verifique se o 
 <body>
     <script>
     let planetas = ["Mercúrio", "Vênus", "Terra", "Marte", "Júpiter", "Saturno", "Urano", "Netuno" ,"Plutão"];
-    alert(planetas);
+   alert(planetas.join("\n"));
     var nome = (prompt("Digite um planeta"));
-    if (planetas.includes(nome)){
-        alert ("O planeta digitado foi " + nome)
+    while(!planetas.includes(nome)){
+        alert("Digite um planeta válido");
+       nome = prompt("Digite um planeta");
     }
- else {
-
-    alert ("Digite um planeta válido")
-     nome = (prompt("Digite um planeta"));
- }
+alert("O planeta digitado foi " + nome);
 
     </script>
     

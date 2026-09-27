@@ -1,0 +1,49 @@
+<!--### 3 - Compras
+Vamos criar uma lista de compras.
+- Crie uma array de frutas, exiba-a ao usuário e, em seguida, peça ao usuário para digitar o nome de uma das frutas.
+- Caso a fruta esteja no array, remova-a e exiba a mensagem "Fruta foi retirada da lista".
+Peça novamente para o usuário digitar o nome de uma fruta para ser removida.
+- Sempre que o usuário procurar por uma fruta que não está no array exiba a mensagem "Fruta indisponível no nosso mercado".
+- Quando o usuário digitar "PARE", exiba a lista de frutas restantes.
+- Quando o array não possuir mais itens dentro de si, escreva "Lista de compras finalizada".-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de frutas</title>
+</head>
+<body>
+    <script>
+        let lista = ["Maça", "Banana","Uva","Laranja","Manga","Abacate","Goiaba","Mamão","Limão","Maracuja"];
+       
+        alert("Essa é a lista de frutas do mercado");
+        alert(lista.join("\n"));
+        pega = prompt("Digite o nome de uma fruta para pega-lá");
+        while (lista.length > 0) {
+
+        if(pega.toUpperCase() === "PARE"){
+        alert ("Obrigado por comprar na lojinha de fruta!");
+         alert ("Sobraram essas frutas no mercado" );
+         alert (lista.join("\n"));
+         break;
+        } else if(lista.includes(pega)){
+        posicao = lista.indexOf(pega);
+        lista.splice(posicao, 1);
+
+        alert("A fruta foi retirada da lista");
+        } else{
+            alert("Fruta indisponível no nosso mercado ")
+        }
+         pega = prompt("Digite outra fruta");
+      
+        }
+        if (lista.length === 0){
+
+            alert("Lista de compras finalizada");
+        }
+
+    </script>
+    
+</body>
+</html>
