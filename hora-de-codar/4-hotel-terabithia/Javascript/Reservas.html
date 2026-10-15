@@ -1,0 +1,89 @@
+<html>
+  <head>
+    <script>
+      var quartos = new Array(20).fill(false);
+
+      function reserva_quartos() {
+        var diaria = parseFloat(prompt("Informe o valor da diária:"));
+        var dias = parseInt(prompt("Informe a quantidade de diárias (1-30):"));
+        if (diaria > 0 && dias >= 1 && dias <= 30) {
+          var nome_hospede = prompt("Informe o nome completo do hóspede:");
+        } else {
+          alert("Valor inválido, " + nome);
+          reserva_quartos();
+        }
+        var tipo_quarto = prompt("Tipo de quarto (S/E/L):");
+        tipo_quarto = tipo_quarto.toUpperCase();
+        while (
+          tipo_quarto !== "S" &&
+          tipo_quarto !== "E" &&
+          tipo_quarto !== "L"
+        ) {
+          alert("Tipo de quarto inválido");
+          var tipo_quarto = prompt("Tipo de quarto (S/E/L):");
+          tipo_quarto = tipo_quarto.toUpperCase();
+        }
+        if (tipo_quarto == "S" || tipo_quarto == "E" || tipo_quarto == "L") {
+          var fator_quarto;
+          var nome_quarto = "";
+          if (tipo_quarto === "S") {
+            fator_quarto = 1.0;
+            nome_quarto = "Standard";
+            alert("Tipo de quarto " + nome_quarto + "Com fator ");
+          } else if (tipo_quarto === "E") {
+            fator_quarto = 1.35;
+            nome_quarto = "Executivo";
+            alert("Tipo de quarto " + nome_quarto + "Com fator ");
+          } else if (tipo_quarto === "L") {
+            fator_quarto = 1.65;
+            nome_quarto = "Luxo";
+            alert("Tipo de quarto " + nome_quarto + "Com fator ");
+          }
+        }
+
+        quarto = parseInt(prompt("Escolha um quarto (1-20):"));
+        while (quarto < 1 || quarto > 20 || quartos[quarto - 1] === true) {
+          alert("Número inválido ou quarto já ocupado, digite novamente.");
+          alert("Há " + quartos.length + " Livres");
+          quarto = parseInt(prompt("Escolha um quarto (1-20):"));
+        }
+
+        var Subtotal = diaria * dias * fator_quarto;
+        var taxa = Subtotal * 0.1;
+        var totalfinal = Subtotal + taxa;
+        alert(
+          "Hóspede: " +
+            nome_hospede +
+            "\n" +
+            "Quarto: " +
+            quarto +
+            " (" +
+            nome_quarto +
+            ")" +
+            "\n" +
+            "Subtotal: R$ " +
+            Subtotal.toFixed(2) +
+            "\n" +
+            "Taxa de serviço (10%): R$ " +
+            taxa.toFixed(2) +
+            "\n" +
+            "Total: R$ " +
+            totalfinal.toFixed(2),
+        );
+        var confirma = prompt(nome_hospede + ", Confirmar reserva? (S/N)");
+        confirma = confirma.toUpperCase();
+        if (confirma === "S") {
+          alert("Reserva efetuada com sucesso.");
+          quartos[quarto - 1] = true;
+          inicio();
+        } else if (confirma === "N") {
+          alert("Reserva não efetuada.");
+          inicio();
+        } else {
+          alert("Número inválido");
+        }
+      }
+      reserva_quartos();
+    </script>
+  </head>
+</html>

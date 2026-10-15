@@ -3,19 +3,49 @@
 <head>
 
 	<script>
-	
+	var nome;
+    const  hotel = "Hotel Pesanta";
 
+
+	function autenticar(){
+	    nome = prompt("Digite seu nome");
+		while (nome == ""){
+        nome = prompt("Por favor, digite seu nome");
+		}
+		for (let tentativas = 0; tentativas < 3; tentativas ++){
+
+        let senha = parseInt(prompt("Digite a senha para entrar"));
+
+		if(senha === 2678){
+
+			alert ("Bem-vindo ao" + hotel + "! , " + nome +  ", É um imenso prazer ter você por aqui!");
+			inicio();
+			return;
+
+		}else {
+		    alert ("senha incorreta! tente novamente");
+}}
+alert ("Sistema Bloqueado! Máximo de tentativas excedido.");
+}
 		function inicio() {
+    
+		alert ("Bem vindo ao " + hotel )
 
-			var escolha = parseInt(prompt('Selecione uma opção 1.) Reserva de Quartos 2.) Cadastro de Hóspedes 3.) Abastecimento de Carros 4.) Sair'));
+			var escolha = parseInt(prompt('Selecione uma opção 1.) Reserva de Quartos  2.) Cadastro de Hospedes 3.) Eventos 4.) Ar Condicionado 5.) Abastecer Carros 6.) Relatórios Operacionais 7.) Sair'));
 
 			if (escolha === 1) {
 				reserva_quartos();
-			} else if (escolha === 2) {
-				cadastro_hospedes();
-			} else if (escolha === 3) {
+			} else if (escolha === 2){
+			    cadastro_hospedes();
+			} else if(escolha === 3){
+                eventos();
+			} else if(escolha === 4){
+                ar_condicionado();	
+			} else if (escolha === 5){
 				abastecer_carros();
-			} else if (escolha === 4) {
+			} else if (escolha === 6) {
+				relatorios_operacionais();
+			} else if (escolha === 7){
 				sair();
 			} else {
 				erro();
@@ -23,22 +53,22 @@
 		}		
 
 		function reserva_quartos() {
-			alert('HOTEL {NOME DO HOTEL} - RESERVA DE QUARTOS');
+			alert( hotel + ' - RESERVA DE QUARTOS');
 			inicio();
 		}
 
 		function cadastro_hospedes() {
-			alert('HOTEL {NOME DO HOTEL} - CADASTRO DE HÓSPEDES');
+			alert(hotel + ' - CADASTRO DE HÓSPEDES');
 			inicio();
 		}
 
 		function abastecer_carros() {
-			alert('HOTEL {NOME DO HOTEL} - ABASTECER');
+			alert(hotel + ' - ABASTECER');
 			inicio();
 		}
 
 		function erro() {
-			alert('Por favor, informe um número entre 1 e 4');
+			alert('Por favor, informe um número entre 1 e 7');
 			inicio();
 		}
 
@@ -51,9 +81,8 @@
 			}
 		}
 
-		
-		
-		inicio();
+	 autenticar();
+
 	</script>
 </head>
 
