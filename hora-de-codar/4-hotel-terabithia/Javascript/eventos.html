@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hotel Pesanta — Eventos</title>
+  </head>
+  <body>
+    <script>
+      function alocar_auditorio(convidados) {
+        let auditorio;
+
+        if (convidados <= 150) {
+          auditorio = "Laranja";
+          alert("Auditório selecionado: Laranja (sem cadeiras adicionais)");
+        } else if (convidados <= 220) {
+          let cadeiras_extra = convidados - 150;
+          auditorio = "Laranja";
+
+          alert(
+            "Auditório selecionado: Laranja (" +
+              cadeiras_extra +
+              " cadeiras adicionais)"
+          );
+        } else {
+          auditorio = "Colorado";
+          alert("Auditório selecionado: Colorado");
+        }
+
+        return {
+          auditorio: auditorio,
+        };
+      }
+
+      function eventos() {
+        let entrada = prompt(
+          "Eventos\n\nDigite a quantidade de convidados"
+        );
+
+        if (entrada === null) return;
+
+        let convidados = Number(entrada);
+
+        if (!Number.isInteger(convidados) || convidados <= 0) {
+          alert("Número de convidados inválido, digite novamente");
+          eventos();
+          return;
+        } else if (convidados > 350) {
+          alert("Número de convidados excedido, digite novamente");
+          eventos();
+          return;
+        }
+
+        let dados_auditorio = alocar_auditorio(convidados);
+
+        let agenda = agendar_evento();
+        if (agenda === null) {
+          return;
+        }
+
+        let dados_garcons = garcom(convidados, agenda.duracao);
+        if (dados_garcons === null) {
+          return;
+        }
+
+        let custo_buffet = comida(convidados);
+        if (custo_buffet === null) {
+          return;
+        }
+
+        let total_geral =
+          dados_garcons.custo_garcom + custo_buffet.custo_total;
+
+        let total_formatado = total_geral
+          .toFixed(2)
+          .replace(".", ",");
+
+        alert(
+          "HOTEL PESANTA — RELATÓRIO DO EVENTO\n\n" +
+            "• Auditório: " +
+            dados_auditorio.auditorio +
+            "\n" +
+            "• Empresa: " +
+            agenda.empresa +
+            "\n" +
+            "• Data: " +
+            agenda.dia +
+            ", às " +
+            agenda.hora_inicial +
+            "h (Duração: " +
+            agenda.duracao +
+            "h)\n" +
+            "• Convidados: " +
+            convidados +
+            "\n\n" +
+            "• Equipe de Garçons (" +
+            dados_garcons.totalgarcom +
+            "): R$ " +
+            dados_garcons.custo_garcom.toFixed(2).replace(".", ",") +
+            "\n" +
+            "• Custo Buffet: R$ " +
+            custo_buffet.custo_total.toFixed(2).replace(".", ",") +
+            "\n\n" +
+            "• TOTAL GERAL: R$ " +
+            total_formatado
+        );
+
+        let confirma = prompt("Deseja confirmar a reserva? (S/N)");
+
+        if (confirma !== null && confirma.trim().toUpperCase() === "S") {
+          alert("Reserva confirmada!");
+        } else {
+          alert("Reserva cancelada!");
+        }
+      }
+
+      function agendar_evento() {
+        let dia_entrada = prompt(
+          "Qual o dia do evento? (ex: segunda, sabado)"
+        );
+
+        if (dia_entrada === null || dia_entrada.trim() === "") {
+          alert("Dia do evento inválido.");
+          return null;
+        }
+
+        let dia = dia_entrada.trim().toLowerCase();
+
+        let entrada_hora = prompt("Qual a hora inicial?");
+        if (entrada_hora === null) return null;
+
+        let hora_inicial = Number(entrada_hora);
+
+        let entrada_duracao = prompt(
+          "Qual a duração do evento em horas? (1 a 12)"
+        );
+        if (entrada_duracao === null) return null;
+
+        let duracao = Number(entrada_duracao);
+
+        let limite_hora = 23;
+
+        if (dia === "sabado" || dia === "sábado" || dia === "domingo") {
+          limite_hora = 15;
+        }
+
+        let hora_termino = hora_inicial + duracao;
+
+        if (
+          !Number.isInteger(duracao) ||
+          duracao < 1 ||
+          duracao > 12
+        ) {
+          alert("Duração inválida. O evento deve ter entre 1 e 12 horas.");
+          return null;
+        }
+
+        if (
+          !Number.isInteger(hora_inicial) ||
+          hora_inicial < 7 ||
+          hora_inicial >= limite_hora ||
+          hora_termino > limite_hora
+        ) {
+          alert("Auditório indisponível");
+          return null;
+        }
+
+        let empresa = prompt("Qual o nome da empresa?");
+
+        if (empresa === null || empresa.trim() === "") {
+          alert("Nome da empresa inválido.");
+          return null;
+        }
+
+        alert(
+          "Auditório reservado para " +
+            empresa +
+            ": " +
+            dia +
+            " às " +
+            hora_inicial +
+            "h."
+        );
+
+        return {
+          dia: dia,
+          hora_inicial: hora_inicial,
+          duracao: duracao,
+          empresa: empresa.trim(),
+        };
+      }
+
+      function garcom(convidados, duracao) {
+        let divisao = convidados / 12;
+        let garcom_adiciona = Math.ceil(divisao);
+
+        let divisao1 = duracao / 2;
+        let reforco = Math.floor(divisao1);
+
+        let totalgarcom = garcom_adiciona + reforco;
+        let custo_hora = 10.5;
+
+        let custo_garcom = totalgarcom * duracao * custo_hora;
+
+        let custo_formatado = custo_garcom
+          .toFixed(2)
+          .replace(".", ",");
+
+        alert(
+          "HOTEL PESANTA — EQUIPE DE GARÇONS\n\n" +
+            "• Garçons necessários: " +
+            totalgarcom +
+            "\n" +
+            "• Custo total: R$ " +
+            custo_formatado
+        );
+
+        return {
+          totalgarcom: totalgarcom,
+          custo_garcom: custo_garcom,
+        };
+      }
+
+      function comida(convidados) {
+        let total_cafe = 0.2 * convidados;
+        let total_agua = 0.5 * convidados;
+        let total_salgados = convidados * 7;
+
+        let custo_cafe = total_cafe * 0.8;
+        let custo_agua = total_agua * 0.4;
+        let custo_salgado = (total_salgados / 100) * 34;
+
+        let custo_total = custo_cafe + custo_agua + custo_salgado;
+
+        let custo_formatado = custo_total
+          .toFixed(2)
+          .replace(".", ",");
+
+        alert(
+          "HOTEL PESANTA — BUFFET\n\n" +
+            "• Consumo do evento: " +
+            total_cafe +
+            "L de café, " +
+            total_agua +
+            "L de água e " +
+            total_salgados +
+            " salgados.\n" +
+            "• Custo total do buffet: R$ " +
+            custo_formatado
+        );
+
+        return {
+          custo_total: custo_total,
+        };
+      }
+
+      eventos();
+    </script>
+  </body>
+</html>

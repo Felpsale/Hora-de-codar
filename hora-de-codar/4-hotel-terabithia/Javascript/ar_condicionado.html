@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Ar-Condicionado</title>
+</head>
+<body>
+
+<script>
+
+function ar_condicionado() {
+
+    let continuar = "S";
+    let menor_valor;
+    let maior_valor;
+    let melhor_empresa = "";
+    let pior_empresa = "";
+    let primeira_empresa = true;
+
+    while (continuar !== "N") {
+
+        let empresa = prompt("Digite o nome da empresa:");
+
+        let valor_aparelho = parseFloat(
+            prompt("Digite o valor do serviço por aparelho:")
+        );
+
+        let quantidade = parseInt(
+            prompt("Digite a quantidade de aparelhos:")
+        );
+
+        let desconto_percentual = parseFloat(
+            prompt("Digite o percentual de desconto (%):")
+        );
+
+        let minimo_desconto = parseInt(
+            prompt("Digite a quantidade mínima para ter desconto:")
+        );
+
+        let deslocamento = parseFloat(
+            prompt("Digite o valor do deslocamento:")
+        );
+        let bruto = valor_aparelho * quantidade;
+        let desconto = 0;
+        if (quantidade >= minimo_desconto) {
+            desconto = bruto * (desconto_percentual / 100);
+        }
+        let total = bruto - desconto + deslocamento;
+        alert(
+            "O serviço de " + empresa +
+            " custará R$ " + total.toFixed(2)
+        );
+        if (primeira_empresa) {
+            menor_valor = total;
+            maior_valor = total;
+            melhor_empresa = empresa;
+            pior_empresa = empresa;
+            primeira_empresa = false;
+
+        } else {
+
+            if (total < menor_valor) {
+                menor_valor = total;
+                melhor_empresa = empresa;
+            }
+
+            if (total > maior_valor) {
+                maior_valor = total;
+                pior_empresa = empresa;
+            }
+        }
+
+        continuar = prompt(
+            "Deseja informar novos dados? (S/N)"
+        ).toUpperCase();
+
+    }
+
+    let diferenca_percentual =
+        ((maior_valor - menor_valor) / menor_valor) * 100;
+    alert(
+        "Melhor orçamento: " + melhor_empresa +
+        " — R$ " + menor_valor.toFixed(2) +
+        "\n\nPior orçamento: " + pior_empresa +
+        " — R$ " + maior_valor.toFixed(2) +
+        "\n\nDiferença percentual: " +
+        diferenca_percentual.toFixed(2) + "%"
+    );
+}
+ar_condicionado();
+
+</script>
+
+</body>
+</html>

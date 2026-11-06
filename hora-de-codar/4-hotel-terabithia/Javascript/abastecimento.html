@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Abastecimento</title>
+  </head>
+  <body>
+    <script>
+      function abastecimento() {
+        let nome = prompt("Digite seu nome:");
+
+        let tanque = 42;
+
+        alert("[Abastecimento]\n\nWayne Oil");
+
+        let alcool_wayne = parseFloat(prompt("Digite o preço do álcool:"));
+
+        let gasolina_wayne = parseFloat(prompt("Digite o preço da gasolina:"));
+
+        alert("[Abastecimento]\n\nStark Petrol");
+
+        let alcool_stark = parseFloat(prompt("Digite o preço do álcool:"));
+
+        let gasolina_stark = parseFloat(prompt("Digite o preço da gasolina:"));
+        let combustivel_wayne;
+        let total_wayne;
+
+        if (alcool_wayne <= gasolina_wayne * 0.7) {
+          combustivel_wayne = "Álcool";
+          total_wayne = alcool_wayne * tanque;
+        } else {
+          combustivel_wayne = "Gasolina";
+          total_wayne = gasolina_wayne * tanque;
+        }
+        let combustivel_stark;
+        let total_stark;
+
+        if (alcool_stark <= gasolina_stark * 0.7) {
+          combustivel_stark = "Álcool";
+          total_stark = alcool_stark * tanque;
+        } else {
+          combustivel_stark = "Gasolina";
+          total_stark = gasolina_stark * tanque;
+        }
+        let total_wayne_formatado = total_wayne.toFixed(2);
+        let total_stark_formatado = total_stark.toFixed(2);
+        let mensagem;
+        if (total_wayne < total_stark) {
+          mensagem =
+            nome +
+            ", é mais barato abastecer com " +
+            combustivel_wayne +
+            " no posto Wayne Oil.";
+        } else if (total_stark < total_wayne) {
+          mensagem =
+            nome +
+            ", é mais barato abastecer com " +
+            combustivel_stark +
+            " no posto Stark Petrol.";
+        } else {
+          mensagem = "Os dois postos possuem o mesmo custo.";
+        }
+        alert(
+          "[RESULTADO DO ABASTECIMENTO]\n\n" +
+            "Wayne Oil:\n" +
+            "Melhor opção: " +
+            combustivel_wayne +
+            "\nTotal (42L): R$ " +
+            total_wayne_formatado +
+            "\n\nStark Petrol:\n" +
+            "Melhor opção: " +
+            combustivel_stark +
+            "\nTotal (42L): R$ " +
+            total_stark_formatado +
+            "\n\n" +
+            mensagem,
+        );
+      }
+
+      abastecimento();
+    </script>
+  </body>
+</html>
