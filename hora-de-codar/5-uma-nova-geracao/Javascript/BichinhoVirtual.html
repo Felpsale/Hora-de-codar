@@ -1,93 +1,317 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BichinhoVirtual</title>
+    <title>Hora de Codar 5 - Bichinho Virtual</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #eef2f5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+      }
+
+      .pet-card {
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        padding: 24px;
+        width: 350px;
+        text-align: center;
+      }
+
+      .pet-card h1 {
+        color: #333333;
+        font-size: 1.5rem;
+        margin-top: 0;
+        margin-bottom: 8px;
+      }
+
+      .pet-avatar {
+        font-size: 4rem;
+        background-color: #f8f9fa;
+        border-radius: 50%;
+        width: 100px;
+        height: 100px;
+        line-height: 100px;
+        margin: 0 auto 16px auto;
+        box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.05);
+      }
+
+      .status-container {
+        background-color: #f1f5f9;
+        border-radius: 10px;
+        padding: 12px 16px;
+        margin-bottom: 16px;
+        text-align: left;
+      }
+
+      .status-item {
+        display: flex;
+        justify-content: space-between;
+        font-weight: 600;
+        color: #475569;
+        margin: 8px 0;
+        font-size: 0.95rem;
+      }
+
+      .status-item span {
+        color: #0ea5e9;
+      }
+
+      .status-item span.game-over {
+        color: #ef4444;
+        font-weight: bold;
+      }
+
+      .status-item span.vitoria {
+        color: #10b981;
+        font-weight: bold;
+      }
+
+      #mensagem-log {
+        font-size: 0.85rem;
+        color: #64748b;
+        font-style: italic;
+        min-height: 44px;
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 8px;
+      }
+
+      .botoes-acao {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 8px;
+      }
+
+      button {
+        background-color: #0ea5e9;
+        color: #ffffff;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 8px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition:
+          background-color 0.2s,
+          transform 0.1s;
+      }
+
+      button:hover {
+        background-color: #0284c7;
+      }
+
+      button:active {
+        transform: scale(0.97);
+      }
+
+      button:disabled {
+        background-color: #cbd5e1;
+        cursor: not-allowed;
+        transform: none;
+      }
+      #btn-reiniciar {
+        background-color: #10b981;
+        margin-top: 12px;
+        width: 100%;
+        display: none;
+      }
+
+      #btn-reiniciar:hover {
+        background-color: #059669;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="pet-card">
+      <h1 id="pet-nome">Bichinho Virtual</h1>
+      <div class="pet-avatar" id="pet-avatar">🐶</div>
+
+      <div class="status-container">
+        <div class="status-item">
+          Fome (máx 99): <span id="val-fome">50</span>
+        </div>
+        <div class="status-item">
+          Felicidade (mín 1): <span id="val-felicidade">50</span>
+        </div>
+        <div class="status-item">
+          Cansaço (máx 99): <span id="val-cansaco">0</span>
+        </div>
+        <div class="status-item">
+          Idade (Meta: 50): <span id="val-idade">0</span>
+        </div>
+        <div class="status-item">
+          Situação: <span id="val-status">Saudável</span>
+        </div>
+      </div>
+
+      <div id="mensagem-log">
+        Alcance 50 anos de idade para vencer o desafio!
+      </div>
+
+      <div class="botoes-acao">
+        <button id="btn-alimentar">Alimentar</button>
+        <button id="btn-brincar">Brincar</button>
+        <button id="btn-descansar">Descansar</button>
+      </div>
+
+      <button id="btn-reiniciar">Começar de Novo 🔄</button>
+    </div>
+
     <script>
       class BichinhoVirtual {
         constructor(nome) {
           this.nome = nome;
           this.nivelDeFome = 50;
           this.nivelFelicidade = 50;
-          this.nivelDeCansaco = 50;
+          this.cansaco = 0;
+          this.idade = 0;
+          this.vivo = true;
+          this.venceu = false;
+          this.mensagemFinal = "";
         }
 
         alimentar() {
-          this.nivelDeFome -= 10;
-          console.log(`${this.nome} foi alimentado. O nível de fome diminuiu.`);
+          this.nivelDeFome = Math.max(0, this.nivelDeFome - 10);
+          return `${this.nome} foi alimentado. A fome diminuiu!`;
         }
 
         brincar() {
-          this.nivelFelicidade += 10;
-          console.log(`${this.nome} está brincando e se sentindo mais feliz.`);
+          this.nivelFelicidade = Math.min(100, this.nivelFelicidade + 10);
+          return `${this.nome} brincou e se sentiu mais feliz!`;
         }
-        verificarStatus() {
-          console.log(`Status atual de ${this.nome}:`);
-          console.log(`Nível de fome: ${this.nivelDeFome}`);
-          console.log(`Nível de felicidade: ${this.nivelFelicidade}`);
-          console.log(`Nível de cansaço: ${this.nivelDeCansaco}`);
-          console.log(`Idade: ${this.idade}`);
+
+        descansar(horas = 8) {
+          const recuperacao = Math.round((horas / 8) * 100);
+          this.cansaco = Math.max(0, this.cansaco - recuperacao);
+
+          if (this.cansaco === 0) {
+            return `${this.nome} dormiu por ${horas}h e está totalmente descansado!`;
+          } else {
+            return `${this.nome} descansou por ${horas}h e reduziu o cansaço em ${recuperacao}%.`;
+          }
         }
+
         passarTempo() {
-          this.nivelDeFome += 5;
-          console.log(
-            `${this.nome} está ficando mais faminto com o passar do tempo.`,
-          );
+          this.nivelDeFome += 3;
+          this.nivelFelicidade -= 3;
+          this.cansaco += 10;
+          this.idade += 1;
+          this.verificarRegrasDoJogo();
         }
-        cansaco() {
-          this.nivelDeCansaco += 5;
-          console.log(
-            `${this.nome} está ficando mais cansado com o passar do tempo.`,
-          );
-        }
-        descansar() {
-          this.nivelDeCansaco -= 10;
-          console.log(
-            `${this.nome} descansou e está se sentindo mais energizado.`,
-          );
-        }
-        idade() {
-          console.log(`${this.nome} está envelhecendo com o tempo.`);
+
+        verificarRegrasDoJogo() {
+          if (this.nivelDeFome >= 100) {
+            this.mensagemFinal = `${this.nome} morreu de Fome (Fome >= 100) :(`;
+            this.vivo = false;
+          } else if (this.nivelFelicidade <= 0) {
+            this.mensagemFinal = `${this.nome} morreu de Tristeza (Felicidade <= 0) :(`;
+            this.vivo = false;
+          } else if (this.cansaco >= 100) {
+            this.mensagemFinal = `${this.nome} morreu de Cansaço (Cansaço >= 100) :(`;
+            this.vivo = false;
+          } else if (this.idade >= 50) {
+            this.venceu = true;
+            this.mensagemFinal = `PARABÉNS! Você cuidou de ${this.nome} até atingir 50 anos!`;
+          }
         }
       }
-    </script>
-    <script>
-      console.log("Bem-vindo ao Simulador de Animal de Estimação Virtual!");
-      const nomePet =
+      let nomePet =
         prompt("Digite o nome do seu animal de estimação:") ||
         "Baltazar Guilherme Tenório";
-      const pet = new BichinhoVirtual(nomePet);
+      let pet = new BichinhoVirtual(nomePet);
+      const elNome = document.getElementById("pet-nome");
+      const elAvatar = document.getElementById("pet-avatar");
+      const elFome = document.getElementById("val-fome");
+      const elFelicidade = document.getElementById("val-felicidade");
+      const elCansaco = document.getElementById("val-cansaco");
+      const elIdade = document.getElementById("val-idade");
+      const elStatus = document.getElementById("val-status");
+      const elLog = document.getElementById("mensagem-log");
+      const btnAlimentar = document.getElementById("btn-alimentar");
+      const btnBrincar = document.getElementById("btn-brincar");
+      const btnDescansar = document.getElementById("btn-descansar");
+      const btnReiniciar = document.getElementById("btn-reiniciar");
+      function atualizarTela(mensagem = "") {
+        elNome.textContent = pet.nome;
+        elFome.textContent = pet.nivelDeFome;
+        elFelicidade.textContent = pet.nivelFelicidade;
+        elCansaco.textContent = pet.cansaco;
+        elIdade.textContent = pet.idade;
 
-      while (true) {
-        const escolha = parseInt(
-          prompt(
-            `O que você deseja fazer com ${pet.nome}? \n 1. Alimentar \n 2. Brincar \n 3. Verificar o status \n 4. Sair`,
-          ),
-        );
-        switch (escolha) {
-          case 1:
-            pet.alimentar();
-            break;
-          case 2:
-            pet.brincar();
-            break;
-          case 3:
-            pet.verificarStatus();
-            break;
-          case 4:
-            console.log(
-              "Saindo do Simulador de Animal de Estimação Virtual. Adeus!",
-            );
-            return;
-          default:
-            console.log("Escolha inválida. Tente novamente.");
+        if (pet.venceu) {
+          elStatus.textContent = "Campeão!";
+          elStatus.className = "vitoria";
+          elLog.textContent = pet.mensagemFinal;
+          desativarBotoes();
+          btnReiniciar.style.display = "block";
+        } else if (!pet.vivo) {
+          elStatus.textContent = "Derrota ): ";
+          elStatus.className = "game-over";
+          elAvatar.textContent = "):";
+          elLog.textContent = `${pet.mensagemFinal} Fim de jogo!`;
+          desativarBotoes();
+          btnReiniciar.style.display = "block";
+        } else {
+          elStatus.textContent = "Saudável";
+          elStatus.className = "";
+          elAvatar.textContent = "🐶";
+          btnReiniciar.style.display = "none";
+          if (mensagem) elLog.textContent = mensagem;
         }
-
-        pet.passarTempo();
       }
-    </script>
-  </head>
+      function desativarBotoes() {
+        btnAlimentar.disabled = true;
+        btnBrincar.disabled = true;
+        btnDescansar.disabled = true;
+      }
+      function reativarBotoes() {
+        btnAlimentar.disabled = false;
+        btnBrincar.disabled = false;
+        btnDescansar.disabled = false;
+      }
+      function executarAcao(acaoFn) {
+        if (!pet.vivo || pet.venceu) return;
 
-  <body></body>
+        const msgAcao = acaoFn();
+        pet.passarTempo();
+        atualizarTela(msgAcao);
+      }
+      btnAlimentar.addEventListener("click", () =>
+        executarAcao(() => pet.alimentar()),
+      );
+      btnBrincar.addEventListener("click", () =>
+        executarAcao(() => pet.brincar()),
+      );
+
+      btnDescansar.addEventListener("click", () => {
+        const horasInput = prompt(
+          "Quantas horas o pet vai descansar? (Recomendado: 8 horas)",
+          "8",
+        );
+        const horas = parseInt(horasInput) || 8;
+        executarAcao(() => pet.descansar(horas));
+      });
+      btnReiniciar.addEventListener("click", () => {
+        const novoNome =
+          prompt(
+            "Digite o nome do seu novo animal de estimação:",
+            "Baltazar Guilherme Tenório",
+          ) || "Baltazar Guilherme Tenório";
+        pet = new BichinhoVirtual(novoNome);
+        reativarBotoes();
+        atualizarTela("Novo jogo iniciado! Cuide bem do seu pet.");
+      });
+      atualizarTela();
+    </script>
+  </body>
 </html>
